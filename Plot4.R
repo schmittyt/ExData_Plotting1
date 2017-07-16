@@ -41,34 +41,3 @@ lines(PowerDataSubset$Global_reactive_power ~ PowerDataSubset$DateAndTime )
 dev.copy(png,'plot4.png')
 dev.off()
 
-
-
-##High level Metrics and viewa of the data
-------------------------------------------------------
-getwd()
-crtl + l = clear screen
-summary(PowerData)
-summary(PowerDataSubset)  #Shows summary metrics
-
-dim(PowerData)
-dim(PowerDataSubset)  ##shows rows and columns
-hist(PowerData$Global_active_power)
-
-min(PowerData$Date)
-max(PowerData$Date)
-median(PowerData$Date)
-head(PowerData, n=100)
-head(TempData, n=100)
-head(PowerDataSubset, n=100)
-## Find junk data:
-JunkData <- PowerData[PowerData$Global_active_power == '?',]
-summary(JunkData)
-TempData <- PowerData[PowerData$Global_active_power != '?',]
-summary(TempData )
-PowerDataSubset <- sqldf("select * from PowerData Where Date = '2007-02-01' or Date = '2007-02-02'")  ##doesn't work due to dates, but the spirit works
-sapply(PowerData, class)
-sapply(PowerDataSubset, class)
-sapply(TempData, class)
-##Lubridate example:
-library(lubridate)
-PowerData$Date <- dmy(PowerData$Date)  
